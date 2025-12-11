@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.3.3
+  carousel_slider: ^5.1.1
     
 
 dev_dependencies:

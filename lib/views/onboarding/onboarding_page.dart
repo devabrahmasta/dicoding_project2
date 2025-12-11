@@ -1,4 +1,4 @@
-import 'package:dicoding_project2/features/dashboard/dashboard_page.dart';
+import 'package:dicoding_project2/views/dashboard/dashboard_page.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPage extends StatefulWidget {

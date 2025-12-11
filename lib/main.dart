@@ -1,6 +1,6 @@
-import 'package:dicoding_project2/features/onboarding/onboarding_page.dart';
 import 'package:flutter/material.dart';
-import 'package:dicoding_project2/features/themes.dart';
+import 'package:dicoding_project2/views/onboarding/onboarding_page.dart';
+import 'package:dicoding_project2/utils/themes.dart';
 
 
 void main() {
