@@ -1,4 +1,5 @@
-import 'package:dicoding_project2/views/dashboard/dashboard_page.dart';
+import 'package:dicoding_project2/views/dashboard_page.dart';
+import 'package:dicoding_project2/views/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -135,7 +136,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             child: Text(
                               'Back',
                               style: TextStyle(
-                                color: const Color(0xFF0138F6),
+                                color: Theme.of(context).colorScheme.primary,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -147,7 +148,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const DashboardPage(),
+                                  builder: (context) => const MainScreen(),
                                 ),
                               );
                             } else {
@@ -158,7 +159,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF0138F6),
+                            backgroundColor: Theme.of(context).colorScheme.primary,
                             minimumSize: Size(
                               _currentPage == 0 ? 300 : 100,
                               50,
@@ -195,7 +196,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       curve: Curves.easeIn,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: _currentPage == index ? const Color(0xFF0138F6) : Colors.grey,
+        color: _currentPage == index ? Theme.of(context).colorScheme.primary : Colors.grey,
       ),
     );
   }

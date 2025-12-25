@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dicoding_project2/views/onboarding/onboarding_page.dart';
+import 'package:dicoding_project2/views/onboarding_page.dart';
 import 'package:dicoding_project2/utils/themes.dart';
 
 
