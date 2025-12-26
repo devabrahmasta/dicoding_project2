@@ -29,7 +29,7 @@ class _DashboardPageState extends State<DashboardPage> {
       'synopsis': 'ajfnkajsdnfajksldnfasd',
       'usia': '13+',
       'image':
-      'https://i.pinimg.com/736x/8e/3e/e4/8e3ee44a61d4e3c3c24725151138c1ef.jpg',
+          'https://i.pinimg.com/736x/8e/3e/e4/8e3ee44a61d4e3c3c24725151138c1ef.jpg',
     },
     {
       'title': 'Demon Slayer: Infinity Castle',
@@ -37,7 +37,7 @@ class _DashboardPageState extends State<DashboardPage> {
       'synopsis': 'ajfnkajsdnfajksldnfasd',
       'usia': '17+',
       'image':
-      'https://i.pinimg.com/736x/a5/45/45/a545452373f034a31abd0c6398bd3d1d.jpg',
+          'https://i.pinimg.com/736x/a5/45/45/a545452373f034a31abd0c6398bd3d1d.jpg',
     },
     {
       'title': 'Interstelar',
@@ -45,7 +45,7 @@ class _DashboardPageState extends State<DashboardPage> {
       'synopsis': 'ajfnkajsdnfajksldnfasd',
       'usia': '21+',
       'image':
-      'https://tse4.mm.bing.net/th/id/OIP.hm_XUN8Dj75wA2PQ1hwafwHaLH?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3',
+          'https://tse4.mm.bing.net/th/id/OIP.hm_XUN8Dj75wA2PQ1hwafwHaLH?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3',
     },
     {
       'title': 'Zootopia 2',
@@ -53,7 +53,7 @@ class _DashboardPageState extends State<DashboardPage> {
       'synopsis': 'ajfnkajsdnfajksldnfasd',
       'usia': '13+',
       'image':
-      'https://hilite.org/wp-content/uploads/2025/12/bjUWGw0Ao0qVWxagN3VCwBJHVo6.jpg',
+          'https://hilite.org/wp-content/uploads/2025/12/bjUWGw0Ao0qVWxagN3VCwBJHVo6.jpg',
     },
   ];
 
@@ -102,37 +102,32 @@ class _DashboardPageState extends State<DashboardPage> {
             // Searchbar
             SliverToBoxAdapter(child: _space(20)),
             SliverAppBar(
+              backgroundColor: Colors.white,
+              surfaceTintColor: Colors.transparent,
               pinned: true,
-              actions: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: SizedBox(
-                    height: 45,
-                    child: TextField(
-                      enabled: true,
-                      onChanged: (value) {},
-                      decoration: InputDecoration(
-                        // isDense: true,
-                        contentPadding: EdgeInsets.symmetric(vertical: 5),
-                        hintText: 'Cari Film..',
-                        hintStyle: Theme.of(context).textTheme.labelLarge
-                            ?.copyWith(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w500,
-                            ),
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.only(left: 24, right: 8),
-                          child: Icon(
-                            Icons.search_rounded,
-                            color: Colors.grey,
-                            size: 24,
-                          ),
-                        ),
+              title: SizedBox(
+                height: 45,
+                child: TextField(
+                  enabled: true,
+                  onChanged: (value) {},
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 5),
+                    hintText: 'Cari Film..',
+                    hintStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.only(left: 24, right: 8),
+                      child: Icon(
+                        Icons.search_rounded,
+                        color: Colors.grey,
+                        size: 24,
                       ),
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
 
             // title
@@ -193,7 +188,8 @@ class _DashboardPageState extends State<DashboardPage> {
                               borderRadius: BorderRadius.circular(15),
                               child: Image.network(
                                 _filmDatabase[index]['image'],
-                                fit: BoxFit.fitHeight,
+                                fit: BoxFit.contain,
+                                alignment: Alignment.topCenter,
                               ),
                             ),
                           ),
@@ -299,6 +295,7 @@ class _DashboardPageState extends State<DashboardPage> {
             _title('Top Chart'),
 
             // Top Chart
+            SliverToBoxAdapter(child: _space(15)),
             SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
                 final film = _filmDatabase[index];
@@ -311,56 +308,122 @@ class _DashboardPageState extends State<DashboardPage> {
                         width: 50,
                         height: 40,
                         child: Text(
-                          index.toString().padLeft(2, '0'),
+                          (index + 1).toString().padLeft(2, '0'),
                           style: Theme.of(context).textTheme.headlineSmall
-                              ?.copyWith(fontWeight: FontWeight.w900, fontSize: 32),
+                              ?.copyWith(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 32,
+                              ),
                         ),
                       ),
                       SizedBox(width: 10),
                       SizedBox(
                         width: 100,
-                        height: 80,
+                        height: 100,
                         child: ClipRRect(
                           clipBehavior: Clip.antiAlias,
                           borderRadius: BorderRadius.circular(15),
-                          child: Image.network(_filmDatabase[index]['image'], fit: BoxFit.fitWidth),
+                          child: Image.network(
+                            _filmDatabase[index]['image'],
+                            fit: BoxFit.fitWidth,
+                            alignment: Alignment.topCenter,
+                          ),
                         ),
                       ),
                       SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            film['title'],
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(
-                                fontWeight: FontWeight.w900,
-
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _badge(film['usia']),
+                            _space(5),
+                            Text(
+                              film['title'],
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(fontWeight: FontWeight.w900),
                             ),
-                          ),
-                          _space(5),
-                          Text(film['genre']),
-                          _space(5),
-                          Chip(
-                            label: Text( film['usia']),
-                            labelStyle: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
+                            _space(5),
+                            Text(
+                              film['genre'],
+                              style: Theme.of(context).textTheme.bodySmall,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            backgroundColor: Theme.of(context).colorScheme.secondary,
-                            padding: EdgeInsets.all(0),
-                            shape: StadiumBorder(
-                              side: BorderSide(
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 );
-              }),
+              }, childCount: _filmDatabase.length),
+            ),
+
+            SliverToBoxAdapter(child: _space(25)),
+            _title('Coming Soon'),
+            SliverToBoxAdapter(child: _space(15)),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 220,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: _filmDatabase.length,
+                  itemBuilder: (context, index) {
+                    final film = _filmDatabase[index];
+
+                    return SizedBox(
+                      height: 200,
+                      width: 250,
+                      child: Card(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 10,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        elevation: 3,
+                        surfaceTintColor: Colors.transparent,
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 140,
+                              width: double.infinity,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Image.network(
+                                  film['image'],
+                                  fit: BoxFit.fitWidth,
+                                  alignment: Alignment.topCenter,
+                                ),
+                              ),
+                            ),
+                            _space(5),
+                            Text(
+                              film['title'],
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(fontWeight: FontWeight.w900),
+                            ),
+                            _space(5),
+                            Text(
+                              film['genre'],
+                              style: Theme.of(context).textTheme.bodySmall,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            _space(5),
+                            _badge(film['usia']),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
           ],
         ),
@@ -370,6 +433,27 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Widget _space(double height) {
     return SizedBox(height: height);
+  }
+
+  Widget _badge(String usia) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 1,
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(
+        usia,
+        textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+          fontWeight: FontWeight.w900,
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+      ),
+    );
   }
 
   Widget _title(String title) {
