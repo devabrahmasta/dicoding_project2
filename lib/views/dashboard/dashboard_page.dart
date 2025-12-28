@@ -3,6 +3,7 @@ import 'package:dicoding_project2/models/movie.dart';
 import 'package:dicoding_project2/views/dashboard/detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:dicoding_project2/data/movie_data.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -141,13 +142,11 @@ class _DashboardPageState extends State<DashboardPage> {
                         child: InkWell(
                           onTap: () {
                             Movie movieData = nowShowingMovies[index];
-
-                            Navigator.push(
+                            PersistentNavBarNavigator.pushNewScreen(
                               context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    DetailPage(movie: movieData),
-                              ),
+                              screen: DetailPage(movie: movieData),
+                              withNavBar: false,
+                              pageTransitionAnimation: PageTransitionAnimation.cupertino,
                             );
                           },
                           borderRadius: BorderRadius.circular(15),
@@ -254,7 +253,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 final movie = nowShowingMovies[index];
 
                 return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Row(
                     children: [
                       SizedBox(
@@ -321,14 +320,14 @@ class _DashboardPageState extends State<DashboardPage> {
               child: SizedBox(
                 height: 340,
                 child: ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   scrollDirection: Axis.horizontal,
                   itemCount: nowShowingMovies.length,
                   itemBuilder: (context, index) {
                     final movie = comingSoonMovies[index];
 
                     return Padding(
-                      padding: EdgeInsets.only(right: 15),
+                      padding: EdgeInsets.only(right: 20),
                       child: SizedBox(
                         height: 340,
                         width: 180,
@@ -459,7 +458,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Widget _title(String title) {
     return SliverPadding(
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       sliver: SliverToBoxAdapter(
         child: Text(title, style: Theme.of(context).textTheme.titleLarge),
       ),

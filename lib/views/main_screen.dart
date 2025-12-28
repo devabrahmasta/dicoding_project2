@@ -69,14 +69,13 @@ class _MainScreenState extends State<MainScreen> {
       animationSettings: const NavBarAnimationSettings(
         navBarItemAnimation: ItemAnimationSettings(
           duration: Duration(milliseconds: 400),
-          // curve: Curves.easeInOutCubicEmphasized,
           curve: Curves.fastEaseInToSlowEaseOut,
         ),
       ),
       confineToSafeArea: true,
       navBarHeight: kBottomNavigationBarHeight,
       navBarStyle:
-          NavBarStyle.style3, // Choose the nav bar style with this property
+          NavBarStyle.style3,
     );
   }
 }

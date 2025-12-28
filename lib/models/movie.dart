@@ -6,6 +6,8 @@ class Movie {
   final String usia;
   final double rating;
   final String image;
+  final String duration;
+  final String director;
 
   Movie({
     required this.title,
@@ -14,5 +16,8 @@ class Movie {
     required this.usia,
     required this.rating,
     required this.image,
+    required this.duration,
+    required this.director,
+
   });
 }
