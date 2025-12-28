@@ -1,7 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dicoding_project2/views/dashboard/pembayaran.dart';
-import 'package:dicoding_project2/views/dashboard/pilih_bioskop.dart';
+import 'package:dicoding_project2/models/movie.dart';
+import 'package:dicoding_project2/views/dashboard/detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:dicoding_project2/data/movie_data.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -11,60 +12,8 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  // final PageController _pageController = PageController(initialPage: 0);
-
   int _currentPage = 0;
 
-  // final List<String, dynamic> _promoDatabase = [
-
-  final List<Map<String, dynamic>> _filmDatabase = [
-    {
-      'title': 'Inside Out',
-      'genre': 'Animation, Adventure, Romance',
-      'synopsis': 'ajfnkajsdnfajksldnfasd',
-      'usia': '18+',
-      'rating': 4.5,
-      'image': 'https://i.ebayimg.com/images/g/wtUAAOSwtqtk4Ytr/s-l1200.jpg',
-    },
-    {
-      'title': 'Jujutsu Kaisen',
-      'genre': 'Animation, Adventure, Romance',
-      'synopsis': 'ajfnkajsdnfajksldnfasd',
-      'usia': '13+',
-      'rating': 4.5,
-      'image':
-          'https://i.pinimg.com/736x/8e/3e/e4/8e3ee44a61d4e3c3c24725151138c1ef.jpg',
-    },
-    {
-      'title': 'Demon Slayer: Infinity Castle',
-      'genre': 'Animation, Adventure, Romance',
-      'synopsis': 'ajfnkajsdnfajksldnfasd',
-      'usia': '17+',
-      'rating': 4.7,
-      'image':
-          'https://i.pinimg.com/736x/a5/45/45/a545452373f034a31abd0c6398bd3d1d.jpg',
-    },
-    {
-      'title': 'Interstelar',
-      'genre': 'Animation, Adventure, Romance',
-      'synopsis': 'ajfnkajsdnfajksldnfasd',
-      'usia': '21+',
-      'rating': 4.9,
-      'image':
-          'https://tse4.mm.bing.net/th/id/OIP.hm_XUN8Dj75wA2PQ1hwafwHaLH?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3',
-    },
-    {
-      'title': 'Zootopia 2',
-      'genre': 'Animation, Adventure, Romance',
-      'synopsis': 'ajfnkajsdnfajksldnfasd',
-      'usia': '13+',
-      'rating': 4.5,
-      'image':
-          'https://hilite.org/wp-content/uploads/2025/12/bjUWGw0Ao0qVWxagN3VCwBJHVo6.jpg',
-    },
-  ];
-
-  // ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,7 +68,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   onChanged: (value) {},
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 5),
-                    hintText: 'Cari Film..',
+                    hintText: 'Searching Movies..',
                     hintStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
                       color: Colors.grey,
                       fontWeight: FontWeight.w500,
@@ -170,7 +119,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           switchInCurve: Curves.easeIn,
                           switchOutCurve: Curves.easeOut,
                           child: Text(
-                            _filmDatabase[_currentPage]['title'],
+                            nowShowingMovies[_currentPage].title,
                             style: Theme.of(context).textTheme.bodyLarge
                                 ?.copyWith(
                                   fontWeight: FontWeight.w900,
@@ -180,21 +129,24 @@ class _DashboardPageState extends State<DashboardPage> {
                         ),
                       ],
                     ),
-                    // child: Text(_filmDatabase[index]['title']),
                   ),
 
                   // Carousel
                   CarouselSlider.builder(
-                    itemCount: _filmDatabase.length,
+                    itemCount: nowShowingMovies.length,
                     itemBuilder: (context, index, realIndex) {
+                      final movie = nowShowingMovies[index];
                       return Material(
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
+                            Movie movieData = nowShowingMovies[index];
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const PilihBioskop(),
+                                builder: (context) =>
+                                    DetailPage(movie: movieData),
                               ),
                             );
                           },
@@ -206,7 +158,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(15),
                                   child: Image.network(
-                                    _filmDatabase[index]['image'],
+                                    movie.image,
                                     fit: BoxFit.contain,
                                     alignment: Alignment.topCenter,
                                   ),
@@ -216,7 +168,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                 left: 12,
                                 top: 12,
                                 child: _rating(
-                                  _filmDatabase[index]['rating'],
+                                  movie.rating,
                                   Theme.of(context).colorScheme.secondary,
                                   Colors.white,
                                 ),
@@ -229,14 +181,18 @@ class _DashboardPageState extends State<DashboardPage> {
                                     duration: Duration(seconds: 100),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
-                                      color: Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primary,
                                     ),
                                     curve: Curves.fastOutSlowIn,
                                     height: 50,
                                     width: double.infinity,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Icon(
                                           Icons.confirmation_number_rounded,
@@ -295,7 +251,7 @@ class _DashboardPageState extends State<DashboardPage> {
             // Top Chart
             SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
-                final film = _filmDatabase[index];
+                final movie = nowShowingMovies[index];
 
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -321,7 +277,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           clipBehavior: Clip.antiAlias,
                           borderRadius: BorderRadius.circular(15),
                           child: Image.network(
-                            _filmDatabase[index]['image'],
+                            movie.image,
                             fit: BoxFit.fitWidth,
                             alignment: Alignment.topCenter,
                           ),
@@ -332,10 +288,10 @@ class _DashboardPageState extends State<DashboardPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _badge(film['usia']),
+                            _badge(movie.usia),
                             _space(5),
                             Text(
-                              film['title'],
+                              movie.title,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.bodyMedium
@@ -343,7 +299,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             ),
                             _space(5),
                             Text(
-                              film['genre'],
+                              movie.genre,
                               style: Theme.of(context).textTheme.bodySmall,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -354,7 +310,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     ],
                   ),
                 );
-              }, childCount: _filmDatabase.length),
+              }, childCount: nowShowingMovies.length),
             ),
 
             SliverToBoxAdapter(child: _space(25)),
@@ -363,41 +319,56 @@ class _DashboardPageState extends State<DashboardPage> {
             SliverToBoxAdapter(child: _space(20)),
             SliverToBoxAdapter(
               child: SizedBox(
-                height: 240,
+                height: 340,
                 child: ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
                   scrollDirection: Axis.horizontal,
-                  itemCount: _filmDatabase.length,
+                  itemCount: nowShowingMovies.length,
                   itemBuilder: (context, index) {
-                    final film = _filmDatabase[index];
+                    final movie = comingSoonMovies[index];
 
-                    return SizedBox(
-                      height: 400,
-                      width: 200,
-                      child: Card(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 10,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        elevation: 3,
-                        surfaceTintColor: Colors.transparent,
-                        color: Colors.white,
+                    return Padding(
+                      padding: EdgeInsets.only(right: 15),
+                      child: SizedBox(
+                        height: 340,
+                        width: 180,
                         child: Column(
                           children: [
-                            SizedBox(
-                              height: 100,
-                              width: double.infinity,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child: Image.network(
-                                  film['image'],
-                                  fit: BoxFit.fitWidth,
-                                  alignment: Alignment.topCenter,
+                            Stack(
+                              children: [
+                                // Image
+                                SizedBox(
+                                  height: 250,
+                                  width: double.infinity,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: Image.network(
+                                      movie.image,
+                                      fit: BoxFit.fitWidth,
+                                      alignment: Alignment.topCenter,
+                                    ),
+                                  ),
                                 ),
-                              ),
+
+                                // Age
+                                Positioned(
+                                  top: 10,
+                                  right: 10,
+                                  child: _badge(movie.usia, isFill: true),
+                                ),
+                                // Rating
+                                Positioned(
+                                  top: 10,
+                                  left: 10,
+                                  child: _rating(
+                                    movie.rating,
+                                    Theme.of(context).colorScheme.secondary,
+                                    Colors.white,
+                                  ),
+                                ),
+                              ],
                             ),
+
                             Expanded(
                               child: Padding(
                                 padding: EdgeInsets.all(5),
@@ -405,7 +376,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      film['title'],
+                                      movie.title,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: Theme.of(context)
@@ -415,29 +386,29 @@ class _DashboardPageState extends State<DashboardPage> {
                                             fontWeight: FontWeight.w900,
                                           ),
                                     ),
-                                    _space(5),
-                                    Text(
-                                      film['genre'],
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.labelSmall,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    _space(5),
-                                    Row(
-                                      children: [
-                                        _badge(film['usia']),
-                                        SizedBox(width: 5),
-                                        _rating(
-                                          _filmDatabase[index]['rating'],
-                                          Theme.of(
-                                            context,
-                                          ).colorScheme.secondary,
-                                          Colors.white,
-                                        ),
-                                      ],
-                                    ),
+                                    // _space(5),
+                                    // Text(
+                                    //   movie.genre,
+                                    //   style: Theme.of(
+                                    //     context,
+                                    //   ).textTheme.labelSmall,
+                                    //   maxLines: 2,
+                                    //   overflow: TextOverflow.ellipsis,
+                                    // ),
+                                    // _space(5),
+                                    // Row(
+                                    //   children: [
+                                    //     _badge(movie.usia),
+                                    //     SizedBox(width: 5),
+                                    //     // Text(
+                                    //     // movie.title, style:
+                                    //     //   Theme.of(
+                                    //     //     context,
+                                    //     //   ).colorScheme.secondary,
+                                    //     //   Colors.white,
+                                    //     // ),),
+                                    //   ],
+                                    // ),
                                   ],
                                 ),
                               ),
@@ -460,14 +431,19 @@ class _DashboardPageState extends State<DashboardPage> {
     return SizedBox(height: height);
   }
 
-  Widget _badge(String usia) {
+  Widget _badge(String usia, {bool isFill = false}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
-        border: Border.all(
-          width: 1,
-          color: Theme.of(context).colorScheme.secondary,
-        ),
+        color: isFill == true
+            ? Theme.of(context).colorScheme.secondary
+            : Colors.transparent,
+        border: isFill == true
+            ? null
+            : Border.all(
+                width: 1,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
@@ -475,7 +451,7 @@ class _DashboardPageState extends State<DashboardPage> {
         textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.labelSmall?.copyWith(
           fontWeight: FontWeight.w900,
-          color: Theme.of(context).colorScheme.secondary,
+          color: isFill == true ? Colors.white : Theme.of(context).colorScheme.secondary,
         ),
       ),
     );
