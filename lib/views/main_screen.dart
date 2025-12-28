@@ -1,5 +1,5 @@
 import 'package:dicoding_project2/views/cinemas_page.dart';
-import 'package:dicoding_project2/views/dashboard_page.dart';
+import 'package:dicoding_project2/views/dashboard/dashboard_page.dart';
 import 'package:dicoding_project2/views/personal_page.dart';
 import 'package:dicoding_project2/views/ticket_page.dart';
 import 'package:flutter/material.dart';
