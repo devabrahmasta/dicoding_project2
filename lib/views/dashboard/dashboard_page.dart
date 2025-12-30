@@ -26,7 +26,13 @@ class _DashboardPageState extends State<DashboardPage> {
             // User Profile
             SliverToBoxAdapter(
               child: ListTile(
-                leading: CircleAvatar(),
+                leading: CircleAvatar(
+                  backgroundColor: Colors.grey.shade200,
+                  child: Icon(
+                    Icons.person_rounded,
+                    color: Colors.grey.shade400,
+                  ),
+                ),
                 title: Text(
                   'Welcome Dicoding',
                   style: Theme.of(
@@ -45,7 +51,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   style: IconButton.styleFrom(
-                    backgroundColor: const Color(0xFFEAEFFF),
+                    backgroundColor: Theme.of(context).colorScheme.surface,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                       // side: BorderSide(width: 0),
@@ -69,8 +75,8 @@ class _DashboardPageState extends State<DashboardPage> {
                   onChanged: (value) {},
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 5),
-                    hintText: 'Searching Movies..',
-                    hintStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    hintText: 'Cari Film..',
+                    hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Colors.grey,
                       fontWeight: FontWeight.w500,
                     ),
@@ -89,7 +95,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
             // title
             SliverToBoxAdapter(child: _space(20)),
-            _title('Now Showing'),
+            _title('Sedang Tayang'),
 
             SliverToBoxAdapter(child: _space(20)),
             SliverToBoxAdapter(
@@ -146,7 +152,8 @@ class _DashboardPageState extends State<DashboardPage> {
                               context,
                               screen: DetailPage(movie: movieData),
                               withNavBar: false,
-                              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.cupertino,
                             );
                           },
                           borderRadius: BorderRadius.circular(15),
@@ -201,7 +208,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                         ),
                                         SizedBox(width: 8),
                                         Text(
-                                          'Buy Ticket',
+                                          'Beli Tiket',
                                           textAlign: TextAlign.center,
                                           style: Theme.of(context)
                                               .textTheme
@@ -313,7 +320,7 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
 
             SliverToBoxAdapter(child: _space(25)),
-            _title('Coming Soon'),
+            _title('Akan Datang'),
 
             SliverToBoxAdapter(child: _space(20)),
             SliverToBoxAdapter(
@@ -354,16 +361,6 @@ class _DashboardPageState extends State<DashboardPage> {
                                   top: 10,
                                   right: 10,
                                   child: _badge(movie.usia, isFill: true),
-                                ),
-                                // Rating
-                                Positioned(
-                                  top: 10,
-                                  left: 10,
-                                  child: _rating(
-                                    movie.rating,
-                                    Theme.of(context).colorScheme.secondary,
-                                    Colors.white,
-                                  ),
                                 ),
                               ],
                             ),
@@ -450,7 +447,9 @@ class _DashboardPageState extends State<DashboardPage> {
         textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.labelSmall?.copyWith(
           fontWeight: FontWeight.w900,
-          color: isFill == true ? Colors.white : Theme.of(context).colorScheme.secondary,
+          color: isFill == true
+              ? Colors.white
+              : Theme.of(context).colorScheme.secondary,
         ),
       ),
     );
