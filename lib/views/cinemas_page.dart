@@ -16,12 +16,33 @@ class _CinemasPageState extends State<CinemasPage> {
     {'name': 'Trans Studio Mall XXI', 'address': 'Jl. Imam Bonjol, Denpasar'},
     {'name': 'Cinepolis Plaza Renon', 'address': 'Plaza Renon, Denpasar'},
     {'name': 'Cinepolis Lippo Mall Kuta', 'address': 'Lippo Mall Kuta, Badung'},
-    {
-      'name': 'Cinepolis Sidewalk Jimbaran',
-      'address': 'Sidewalk Jimbaran, Badung',
-    },
+    {'name': 'Cinepolis Sidewalk Jimbaran', 'address': 'Sidewalk Jimbaran, Badung'},
     {'name': 'Denpasar Cineplex', 'address': 'Jl. M.H. Thamrin, Denpasar'},
   ];
+
+  List<Map<String, dynamic>> _foundCinemas = [];
+
+  @override
+  void initState() {
+    _foundCinemas = _cinemas;
+    super.initState();
+  }
+
+  void _runFilter(String enterKeyword) {
+    List<Map<String, dynamic>> results = [];
+    if (enterKeyword.isEmpty) {
+      results = _cinemas;
+    } else {
+      results = _cinemas
+          .where((item) =>
+              item["name"].toLowerCase().contains(enterKeyword.toLowerCase()))
+          .toList();
+    }
+
+    setState(() {
+      _foundCinemas = results;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +53,7 @@ class _CinemasPageState extends State<CinemasPage> {
           slivers: [
             SliverAppBar(
               title: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   'Daftar Bioskop',
                   style: Theme.of(context).textTheme.titleLarge,
@@ -48,16 +69,16 @@ class _CinemasPageState extends State<CinemasPage> {
                 height: 45,
                 child: TextField(
                   enabled: true,
-                  onChanged: (value) {},
+                  onChanged: (value) => _runFilter(value),
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(vertical: 5),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 5),
                     hintText: 'Cari Bioskop..',
                     hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Colors.grey,
                       fontWeight: FontWeight.w500,
                     ),
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.only(left: 24, right: 8),
+                    prefixIcon: const Padding(
+                      padding: EdgeInsets.only(left: 24, right: 8),
                       child: Icon(
                         Icons.search_rounded,
                         color: Colors.grey,
@@ -68,15 +89,25 @@ class _CinemasPageState extends State<CinemasPage> {
                 ),
               ),
             ),
-            SliverToBoxAdapter(child: SizedBox(height: 20)),
+
+            const SliverToBoxAdapter(child: SizedBox(height: 20)),
             SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
-                final cinema = _cinemas[index];
+                final cinema = _foundCinemas[index];
 
                 return Column(
                   children: [
                     Divider(color: Colors.grey.shade300),
                     ListTile(
+                      onTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Menu bioskop ${cinema['name']} sedang dalam tahap pengembangan'),
+                            duration: const Duration(seconds: 1),
+                            backgroundColor: Theme.of(context).colorScheme.primary,
+                          ),
+                        );
+                      },
                       title: Text(
                         cinema['name'],
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -89,17 +120,30 @@ class _CinemasPageState extends State<CinemasPage> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      trailing: Icon(
+                      trailing: const Icon(
                         Icons.arrow_forward_ios,
                         color: Colors.grey,
                         size: 12,
                       ),
-                      leading: Icon(Icons.star_rounded, color: Colors.grey),
+                      leading: const Icon(Icons.star_rounded, color: Colors.grey),
                     ),
                   ],
                 );
-              }, childCount: _cinemas.length),
+              }, childCount: _foundCinemas.length),
             ),
+            
+            if (_foundCinemas.isEmpty) 
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: Center(
+                    child: Text(
+                      'Bioskop tidak ditemukan',
+                      style: TextStyle(color: Colors.grey.shade400),
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),

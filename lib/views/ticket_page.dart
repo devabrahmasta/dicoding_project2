@@ -29,7 +29,7 @@ class TicketPage extends StatelessWidget {
             ),
             SizedBox(height: 16),
             Text(
-              'Tidak ada tiket yang dipesan',
+              'Belum ada tiket yang dipesan',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Colors.grey.shade600,
               ),

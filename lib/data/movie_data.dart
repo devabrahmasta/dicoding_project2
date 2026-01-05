@@ -107,7 +107,7 @@ final List<Movie> comingSoonMovies = [
     usia: 'SU',
     rating: 0.0,
     image:
-        'http://www.impawards.com/2024/posters/mufasa_the_lion_king_ver5.jpg',
+        'https://image.tmdb.org/t/p/original/9bXHaLlsFYpJUutg4E6WXAjaxDi.jpg',
     duration: '1j 58m',
     director: 'Barry Jenkins',
   ),
@@ -131,7 +131,7 @@ final List<Movie> comingSoonMovies = [
     usia: '13+',
     rating: 0.0,
     image:
-        'https://upload.wikimedia.org/wikipedia/en/a/a2/Superman_2025_poster.jpg',
+        'https://posterspy.com/wp-content/uploads/2024/01/Second-Poster-Superman-Legacy-Home.jpg',
     duration: '2j 15m',
     director: 'James Gunn',
   ),
@@ -142,7 +142,7 @@ final List<Movie> comingSoonMovies = [
         'Seorang anak laki-laki bernama Elio secara tidak sengaja diteleportasi ke Communiverse dan dikira sebagai duta besar Bumi.',
     usia: 'SU',
     rating: 0.0,
-    image: 'https://upload.wikimedia.org/wikipedia/en/4/46/Elio_poster.jpg',
+    image: 'https://thewaltdisneycompany.com/app/uploads/2025/03/1920_ELIO_Payoff_Running_1s_v4.0_Mech4b_FS-1200x1778.jpg',
     duration: '1j 45m',
     director: 'Domee Shi',
   ),

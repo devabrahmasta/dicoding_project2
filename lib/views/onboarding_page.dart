@@ -1,4 +1,3 @@
-import 'package:dicoding_project2/views/dashboard/dashboard_page.dart';
 import 'package:dicoding_project2/views/main_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -33,9 +32,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
       "image": 'assets/images/onboarding3.png',
     },
   ];
+
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final mediaQuery = MediaQuery.of(context);
+    final screenHeight = mediaQuery.size.height;
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -50,134 +53,136 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 });
               },
               itemBuilder: (context, index) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      _onboardingData[index]['image'],
-                      fit: BoxFit.cover,
-                    ),
-                    // Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 10,
+                return SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: isLandscape
+                            ? screenHeight * 0.5
+                            : screenHeight * 0.6,
+                        width: double.infinity,
+                        child: Image.asset(
+                          _onboardingData[index]['image'],
+                          fit: BoxFit.contain,
+                        ),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            _onboardingData[index]['title'],
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 30,
+                          vertical: 10,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              _onboardingData[index]['title'],
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            _onboardingData[index]['desc'],
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.black38,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                            SizedBox(height: 10),
+                            Text(
+                              _onboardingData[index]['desc'],
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.black38,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 150),
+                    ],
+                  ),
                 );
               },
             ),
           ),
-
           Align(
             alignment: AlignmentGeometry.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-              child: Container(
-                // height: screenHeight * 0.15,
-                width: double.infinity,
-                color: Colors.white,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        _onboardingData.length,
-                        (index) => _buildDot(index),
-                      ),
+            child: Container(
+              width: double.infinity,
+              color: Colors.white,
+              padding: EdgeInsets.fromLTRB(20, 20, 20, 40),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      _onboardingData.length,
+                      (index) => _buildDot(index),
                     ),
-
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: _currentPage == 0
-                          ? MainAxisAlignment.center
-                          : MainAxisAlignment.spaceBetween,
-                      children: [
-                        if (_currentPage != 0)
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              minimumSize: Size(100, 50),
-                              elevation: 0,
-                            ),
-                            onPressed: () {
-                              _pageController.previousPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeIn,
-                              );
-                            },
-                            child: Text(
-                              'Back',
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: _currentPage == 0
+                        ? MainAxisAlignment.center
+                        : MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (_currentPage != 0)
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            minimumSize: Size(100, 50),
+                            elevation: 0,
                           ),
-                        ElevatedButton(
                           onPressed: () {
-                            if (_currentPage == _onboardingData.length - 1) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const MainScreen(),
-                                ),
-                              );
-                            } else {
-                              _pageController.nextPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeIn,
-                              );
-                            }
+                            _pageController.previousPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeIn,
+                            );
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).colorScheme.primary,
-                            minimumSize: Size(
-                              _currentPage == 0 ? 300 : 100,
-                              50,
-                            ),
-                            padding: EdgeInsets.symmetric(horizontal: 40),
-                          ),
                           child: Text(
-                            'Next',
+                            'Back',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.primary,
                               fontSize: 20,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_currentPage == _onboardingData.length - 1) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const MainScreen(),
+                              ),
+                            );
+                          } else {
+                            _pageController.nextPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeIn,
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(
+                            context,
+                          ).colorScheme.primary,
+                          minimumSize: Size(_currentPage == 0 ? 300 : 100, 50),
+                          padding: EdgeInsets.symmetric(horizontal: 40),
+                        ),
+                        child: Text(
+                          'Next',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
@@ -195,7 +200,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
       curve: Curves.easeIn,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: _currentPage == index ? Theme.of(context).colorScheme.primary : Colors.grey,
+        color: _currentPage == index
+            ? Theme.of(context).colorScheme.primary
+            : Colors.grey,
       ),
     );
   }
